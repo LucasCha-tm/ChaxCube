@@ -1,14 +1,46 @@
-.home .container {
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    align-items: center;
+/* Variables modernes */
+:root {
+    --primary-glow: #00ff88;
+    --secondary-glow: #ff0080;
+    --accent-blue: #0066ff;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --transition-fluid: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --border-radius-modern: 20px;
+    --backdrop-blur: blur(20px);
 }
 
 /*******************************************************************************
- *                                                                             *
- * Status server                                                               *
- *                                                                             *
+ * Container Principal - Design Moderne                                        *
+ ******************************************************************************/
+
+.home .container {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(135deg, var(--background) 0%, rgba(0, 255, 136, 0.02) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.home .container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 25% 25%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(255, 0, 128, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/*******************************************************************************
+ * Status Server - Ultra Moderne                                               *
  ******************************************************************************/
 
 .status-server {
@@ -16,73 +48,146 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: var(--background);
-    width: 25rem;
-    height: 3rem;
+    background: var(--glass-bg);
+    backdrop-filter: var(--backdrop-blur);
+    width: 28rem;
+    height: 4rem;
     color: var(--color);
-    border-radius: 10px;
+    border-radius: var(--border-radius-modern);
+    border: 1px solid var(--glass-border);
     margin-top: 3rem;
-    padding: 1rem;
-    text-align: center;
+    padding: 1.5rem;
+    transition: var(--transition-fluid);
+    box-shadow: var(--shadow-xl);
+    z-index: 1;
+}
+
+.status-server::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, transparent 0%, rgba(0, 255, 136, 0.1) 50%, transparent 100%);
+    border-radius: var(--border-radius-modern);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.status-server:hover::before {
+    opacity: 1;
+}
+
+.status-server:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        var(--shadow-xl),
+        0 0 30px rgba(0, 255, 136, 0.3);
 }
 
 .server-status-icon {
-    height: 3.3rem;
+    height: 3.5rem;
+    filter: drop-shadow(0 0 10px var(--primary-glow));
+    transition: var(--transition-fluid);
+}
+
+.server-status-icon:hover {
+    transform: scale(1.1) rotate(5deg);
 }
 
 .server-status-name {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+    font-weight: 700;
     color: var(--color);
+    background: linear-gradient(45deg, var(--color), var(--primary-glow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .server-status-text {
-    font-size: 0.6rem;
-    color: #1AC707;
+    font-size: 0.8rem;
+    color: var(--primary-glow);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(26, 199, 7, 0.5);
 }
 
 .server-status-infos .red {
-    color: #FF0409;
+    color: #ff0080;
+    text-shadow: 0 0 10px rgba(255, 0, 128, 0.5);
 }
 
 .status-player-count {
-    background: var(--shadow);
-    min-width: 3rem;
-    height: 3rem;
-    border-radius: 10px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--backdrop-blur);
+    min-width: 4rem;
+    height: 4rem;
+    border-radius: 15px;
+    border: 1px solid var(--glass-border);
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition-fluid);
+}
+
+.status-player-count:hover {
+    transform: scale(1.05);
+    background: rgba(0, 255, 136, 0.1);
 }
 
 .player-count {
-    font-size: 1.5rem;
-    margin: 0.4rem 0.5rem;
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin: 0.8rem 0.7rem;
+    color: var(--primary-glow);
+    text-shadow: 0 0 15px rgba(0, 255, 136, 0.7);
 }
 
-.status-player-count:after {
+.status-player-count::after {
     position: absolute;
     content: '';
-    width: 10px;
-    height: 10px;
-    top: 10px;
-    right: 10px;
-    border-radius: 15px;
-    border: solid 5px var(--background);
-    background: #1AC707;
+    width: 12px;
+    height: 12px;
+    top: 8px;
+    right: 8px;
+    border-radius: 50%;
+    background: var(--primary-glow);
+    box-shadow: 
+        0 0 10px var(--primary-glow),
+        inset 0 0 5px rgba(255, 255, 255, 0.3);
+    animation: pulseOnline 2s ease-in-out infinite;
 }
 
-.red:after {
-    background: #FF0409;
+.red::after {
+    background: var(--secondary-glow);
+    box-shadow: 
+        0 0 10px var(--secondary-glow),
+        inset 0 0 5px rgba(255, 255, 255, 0.3);
 }
+
+@keyframes pulseOnline {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.2); }
+}
+
+/*******************************************************************************
+ * Section Principale - Layout Moderne                                         *
+ ******************************************************************************/
 
 .home-bottom {
     position: relative;
     width: 100%;
-    height: calc(100% - 80px - 8rem);
+    height: calc(100% - 80px - 10rem);
     display: flex;
+    z-index: 1;
+    margin-top: 2rem;
 }
 
 /*******************************************************************************
- *                                                                             *
- * news server                                                                 *
- *                                                                             *
+ * Onglet News - Design Glassmorphism                                          *
  ******************************************************************************/
 
 .new-tab {
@@ -91,78 +196,166 @@
     align-items: center;
     width: 85%;
     height: 100%;
+    padding: 0 1rem;
 }
 
 .titre-tab-new {
     margin-top: 1rem;
-    font-size: 2rem;
-    padding: 0.5rem 1rem;
-    border-radius: 2rem;
-    background: var(--background-transparent);
+    font-size: 2.2rem;
+    font-weight: 800;
+    padding: 1rem 2rem;
+    border-radius: 30px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--backdrop-blur);
+    border: 1px solid var(--glass-border);
     color: var(--color);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.titre-tab-new::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.6s;
+}
+
+.titre-tab-new:hover::before {
+    left: 100%;
 }
 
 .news-list {
-    width: 90%;
+    width: 95%;
     height: 100%;
+    margin: 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.news-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.news-list::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 10px;
-    margin: 1rem 0;
+}
+
+.news-list::-webkit-scrollbar-thumb {
+    background: var(--primary-glow);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
 }
 
 .news-block {
-    width: 100%;
-    margin: 0 0 1rem 0;
-    border-radius: 10px;
-    background: var(--background-transparent);
+    background: var(--glass-bg);
+    backdrop-filter: var(--backdrop-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--border-radius-modern);
+    transition: var(--transition-fluid);
+    overflow: hidden;
+    position: relative;
+}
+
+.news-block::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-glow), var(--accent-blue), var(--secondary-glow));
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.news-block:hover::before {
+    transform: scaleX(1);
+}
+
+.news-block:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+        var(--shadow-xl),
+        0 0 30px rgba(0, 255, 136, 0.2);
 }
 
 .news-header {
     display: flex;
     justify-content: space-between;
-    padding: 1rem 1.5rem;
+    padding: 1.5rem 2rem;
     align-items: center;
+    background: linear-gradient(135deg, transparent 0%, rgba(0, 255, 136, 0.05) 100%);
 }
 
 .header-text .title {
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    font-size: 1.2rem;
-    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--color);
+    position: relative;
+    text-decoration: none;
+}
+
+.header-text .title::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary-glow);
+    transition: width 0.3s ease;
+}
+
+.news-block:hover .header-text .title::after {
+    width: 100%;
 }
 
 .news-header .date {
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-size: 0.9rem;
+    color: var(--primary-glow);
+    font-weight: 600;
 }
 
 .news-content .bbWrapper {
-    padding: 0 1.5rem;
-    padding-bottom: 1rem;
-    font-size: 1.2rem;
-
+    padding: 0 2rem 1.5rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
 }
 
 .news-content .bbWrapper p {
-    font-weight: 100;
-    margin: 0;
-
+    font-weight: 400;
+    margin: 0 0 1rem;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .news-content .bbWrapper .news-author {
-    margin-top: 1rem;
-    text-align: end;
-    font-size: 0.8rem;
+    margin-top: 1.5rem;
+    text-align: right;
+    font-size: 0.9rem;
+    color: var(--primary-glow);
+    font-style: italic;
 }
 
 .news-content .bbWrapper .news-author span {
     font-weight: 700;
+    color: var(--color);
 }
 
 /*******************************************************************************
- *                                                                             *
- * social server                                                               *
- *                                                                             *
+ * Réseaux Sociaux - Design Moderne                                            *
  ******************************************************************************/
 
 .social-tab {
@@ -173,39 +366,68 @@
     width: 15%;
     height: calc(80% - 1rem);
     justify-content: center;
-    margin-bottom: 1rem;
+    margin: 0 1rem 1rem 0;
 }
 
 .social-list {
-    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     height: 100%;
 }
 
 .social-block {
     display: flex;
-    background: var(--background-transparent);
-    width: 90px;
-    height: 90px;
-    margin-bottom: 1rem;
-    border-radius: 10px;
-    font-size: 2rem;
+    background: var(--glass-bg);
+    backdrop-filter: var(--backdrop-blur);
+    border: 1px solid var(--glass-border);
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
     cursor: pointer;
     align-items: center;
     justify-content: center;
+    transition: var(--transition-fluid);
+    position: relative;
+    overflow: hidden;
+}
+
+.social-block::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, var(--primary-glow), var(--accent-blue));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.social-block:hover::before {
+    opacity: 0.1;
+}
+
+.social-block:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
 }
 
 .social-block .icon-social {
     pointer-events: none;
-    background-repeat: no-repeat;
-    height: 55%;
-    width: 55%;
+    height: 60%;
+    width: 60%;
     filter: var(--svg-color);
+    transition: var(--transition-fluid);
+    z-index: 1;
+}
+
+.social-block:hover .icon-social {
+    filter: brightness(1.5) drop-shadow(0 0 10px var(--primary-glow));
 }
 
 /*******************************************************************************
- *                                                                             *
- * sidebar                                                                     *
- *                                                                             *
+ * Sidebar - Interface Futuriste                                               *
  ******************************************************************************/
 
 .sidebar {
@@ -213,166 +435,294 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    height: 90px;
-    background: var(--background-transparent);
+    height: 100px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--backdrop-blur);
+    border-top: 1px solid var(--glass-border);
+    position: relative;
+}
+
+.sidebar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary-glow), var(--accent-blue), var(--secondary-glow));
 }
 
 .player-options {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    border-radius: 15px;
-    height: 3rem;
-    margin: 0 1.5rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    height: 4rem;
+    margin: 0 2rem;
+    padding: 0 1rem;
+    transition: var(--transition-fluid);
+    cursor: pointer;
+}
+
+.player-options:hover {
+    background: rgba(0, 255, 136, 0.1);
+    transform: translateY(-2px);
 }
 
 .player-head {
-    background: url('../../images/default/setve.png'), no-repeat;
+    background: url('../../images/default/setve.png') no-repeat;
     background-size: cover;
     image-rendering: pixelated;
-    transition: var(--transition);
-    height: 3rem;
-    width: 3rem;
-    pointer-events: none;
+    height: 3.5rem;
+    width: 3.5rem;
     border-radius: 15px;
+    border: 2px solid var(--primary-glow);
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+    transition: var(--transition-fluid);
 }
 
-.player-menu {
-    color: var(--element-color);
-    transform: rotate(270deg);
-    pointer-events: none;
+.player-head:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px rgba(0, 255, 136, 0.5);
 }
 
 .play-elements {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 1rem;
 }
 
 .play-instance {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    background: var(--glass-bg);
+    backdrop-filter: var(--backdrop-blur);
+    border: 2px solid var(--primary-glow);
+    border-radius: 20px;
+    height: 4.5rem;
+    padding: 0 2rem;
     position: relative;
-    border: solid 3px var(--element-color);
-    border-radius: 15px;
-    height: 3.2rem;
-    padding-right: 1.9rem;
+    overflow: hidden;
+    transition: var(--transition-fluid);
+    cursor: pointer;
+}
+
+.play-instance::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.play-instance:hover::before {
+    left: 100%;
+}
+
+.play-instance:hover {
+    background: linear-gradient(135deg, var(--primary-glow), var(--accent-blue));
+    color: var(--background);
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
 }
 
 .play-btn {
     border: none;
-    border-radius: 10px;
     background: none;
-    color: var(--color);
-    font-size: 2rem;
-    font-weight: bolder;
-    padding: 0 1.5rem;
+    color: inherit;
+    font-size: 2.2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
     pointer-events: none;
 }
 
-.instance-select {
+.settings-btn {
+    width: 4rem;
+    height: 4rem;
+    background: var(--glass-bg);
+    backdrop-filter: var(--backdrop-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    color: var(--primary-glow);
+    cursor: pointer;
+    transition: var(--transition-fluid);
+    margin: 0 2rem;
     display: flex;
     align-items: center;
-    position: absolute;
-    right: -3;
-    top: -2;
-    color: var(--element-color);
-    font-size: 1rem;
-    height: calc(100% - 1px);
-    border: solid 3px var(--element-color);
-    text-align: center;
-    border-radius: 15px;
-    padding: 0 0.5rem;
-    cursor: pointer;
+    justify-content: center;
+    font-size: 2rem;
 }
 
-.instance-select:before {
-    transform: rotate(270deg);
-    pointer-events: none;
+.settings-btn:hover {
+    background: rgba(0, 255, 136, 0.1);
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
 }
 
-.info-starting-game {
-    display: none;
-    text-align: center;
-}
+/*******************************************************************************
+ * Barres de Progression - Style Futuriste                                     *
+ ******************************************************************************/
 
 .progress-bar {
     appearance: none;
-    height: 10px;
-    margin: 0.5rem 0;
+    height: 12px;
+    margin: 1rem 0;
+    border-radius: 10px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    overflow: hidden;
 }
 
 .progress-bar::-webkit-progress-bar {
-    background-color: var(--background);
-    border: solid 1px var(--element-color);
+    background: linear-gradient(90deg, rgba(0, 255, 136, 0.1), rgba(0, 102, 255, 0.1));
     border-radius: 10px;
 }
 
 .progress-bar::-webkit-progress-value {
-    background-color: var(--element-color);
+    background: linear-gradient(90deg, var(--primary-glow), var(--accent-blue));
     border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+    animation: progressFlow 2s ease-in-out infinite;
 }
 
-.settings-btn {
-    width: 3rem;
-    height: 3rem;
-    font-size: 3rem;
-    color: var(--element-color);
-    margin: 0 1.5rem;
+@keyframes progressFlow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; box-shadow: 0 0 25px rgba(0, 255, 136, 0.8); }
 }
+
+/*******************************************************************************
+ * Popup Instances - Design Modal Moderne                                      *
+ ******************************************************************************/
 
 .instance-popup {
-    position: absolute;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
     display: none;
-    width: 100%;
-    height: 100%;
-    background: #000000b3;
-    z-index: 10;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    text-align: center;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .instances-tab {
+    background: var(--glass-bg);
+    backdrop-filter: var(--backdrop-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--border-radius-modern);
+    padding: 2rem 3rem;
+    max-width: 500px;
+    width: 90%;
     position: relative;
-    background: var(--background);
-    border-radius: 10px;
-    padding: 1rem 3rem;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
 .close-popup {
     position: absolute;
-    display: flex;
-    top: 10px;
-    right: 10px;
-    background: var(--shadow);
-    height: 30px;
-    width: 30px;
+    top: 15px;
+    right: 15px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    width: 35px;
+    height: 35px;
     border-radius: 10px;
+    display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-fluid);
+    color: var(--primary-glow);
+}
+
+.close-popup:hover {
+    background: var(--secondary-glow);
+    color: white;
+    transform: scale(1.1);
 }
 
 .instances-tab p {
-    margin-top: 1.5rem;
-    font-size: 2rem;
+    margin: 2rem 0;
+    font-size: 2.2rem;
+    font-weight: 700;
+    text-align: center;
+    color: var(--color);
 }
 
 .instance-elements {
-    background: var(--background-element);
-    text-align: center;
-    border-radius: 10px;
-    margin: 0.5rem 0;
-    font-size: 1.5rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    margin: 1rem 0;
+    padding: 1rem;
+    font-size: 1.3rem;
     cursor: pointer;
+    transition: var(--transition-fluid);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
 }
 
-.instance-elements:hover {
-    background: var(--element-color);
+.instance-elements::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.2), transparent);
+    transition: left 0.4s;
 }
 
-.active-instance {
-    background: var(--element-color);
+.instance-elements:hover::before {
+    left: 100%;
+}
+
+.instance-elements:hover,
+.instance-elements.active-instance {
+    background: var(--primary-glow);
+    color: var(--background);
+    transform: translateX(5px);
+    box-shadow: 0 5px 20px rgba(0, 255, 136, 0.4);
+}
+
+/*******************************************************************************
+ * Animations et Transitions Globales                                          *
+ ******************************************************************************/
+
+* {
+    transition: var(--transition-fluid);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .social-tab { width: 20%; }
+    .new-tab { width: 80%; }
+}
+
+@media (max-width: 768px) {
+    .status-server { width: 90%; margin: 2rem 1rem; }
+    .home-bottom { flex-direction: column; }
+    .social-tab { position: relative; width: 100%; height: auto; margin: 1rem 0; }
+    .social-list { flex-direction: row; justify-content: center; }
+    .new-tab { width: 100%; }
 }
