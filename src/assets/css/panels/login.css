@@ -1,50 +1,546 @@
+/* Variables CSS pour le login */
+:root {
+    --login-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --danger-gradient: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+    --warning-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    
+    --dark-bg: #0a0a0f;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --card-hover: rgba(255, 255, 255, 0.08);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --border-hover: rgba(255, 255, 255, 0.2);
+    --border-focus: rgba(102, 126, 234, 0.5);
+    
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0b3;
+    --text-muted: #6b6b8a;
+    
+    --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --shadow-strong: 0 16px 64px rgba(0, 0, 0, 0.4);
+    --shadow-glow: 0 0 40px rgba(102, 126, 234, 0.3);
+    --border-radius: 20px;
+    --border-radius-sm: 12px;
+    --border-radius-input: 25px;
+    
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Container principal de login */
 .login .container {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    height: 100vh;
+    background: var(--dark-bg);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    position: relative;
+    overflow: hidden;
 }
 
-.login-tabs {
+/* Fond animé */
+.login .container::before {
+    content: '';
     position: absolute;
-    padding: 15px;
-    background: var(--background);
-    border-radius: 15px;
-    text-align: center;
-    min-width: 40%;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(240, 147, 251, 0.05) 0%, transparent 50%);
+    animation: backgroundFloat 20s ease-in-out infinite;
+    z-index: 0;
 }
 
+@keyframes backgroundFloat {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    33% { transform: rotate(120deg) scale(1.1); }
+    66% { transform: rotate(240deg) scale(0.9); }
+}
+
+/* Panneau de login principal */
+.login-tabs {
+    position: relative;
+    z-index: 10;
+    background: var(--card-bg);
+    backdrop-filter: blur(25px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 3rem;
+    min-width: 450px;
+    max-width: 500px;
+    box-shadow: var(--shadow-strong);
+    animation: loginSlideIn 0.8s var(--bounce);
+    position: relative;
+    overflow: hidden;
+}
+
+.login-tabs::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--login-gradient);
+    border-radius: 20px 20px 0 0;
+}
+
+.login-tabs::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.03) 0%, transparent 70%);
+    animation: panelGlow 6s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes loginSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(50px) scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes panelGlow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+}
+
+/* Sections de login */
 .login-home,
 .login-offline,
 .login-AZauth,
 .login-AZauth-A2F {
     display: none;
+    animation: fadeInContent 0.5s ease-out;
 }
 
+@keyframes fadeInContent {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Titre et textes */
 .login-text {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+    text-align: center;
+    position: relative;
 }
 
-.connect,
-.cancel {
-    background: none;
-    color: var(--color);
-    border: solid 4px var(--element-color);
-    border-radius: 10px;
-    padding: 0.3rem 4rem;
-    font-size: inherit;
-    font-weight: bold;
-    margin: 15px 10px;
+.login-text::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--login-gradient);
+    border-radius: 2px;
+}
+
+/* Logo ou titre principal */
+.login-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    background: var(--login-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
+}
+
+.login-subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-bottom: 2.5rem;
+    line-height: 1.5;
+}
+
+/* Inputs modernes */
+.input-login {
+    margin-bottom: 1.5rem;
+    position: relative;
 }
 
 .input-login .email,
 .input-login .password,
 .A2F {
-    color: var(--color);
-    background: none;
-    border: solid 2px var(--element-color);
-    border-radius: 30px;
-    width: 50%;
-    padding: 0.4rem 1rem;
-    margin-top: 10px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius-input);
+    color: var(--text-primary);
+    font-size: 1rem;
+    padding: 1rem 1.5rem;
+    transition: var(--transition);
+    box-sizing: border-box;
+    position: relative;
+    z-index: 2;
+}
+
+.input-login .email::placeholder,
+.input-login .password::placeholder,
+.A2F::placeholder {
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+.input-login .email:focus,
+.input-login .password:focus,
+.A2F:focus {
+    outline: none;
+    border-color: var(--border-focus);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 25px rgba(102, 126, 234, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Effet de focus avec animation */
+.input-login::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--login-gradient);
+    border-radius: var(--border-radius-input);
+    opacity: 0;
+    z-index: 1;
+    transition: var(--transition);
+    padding: 2px;
+}
+
+.input-login .email:focus ~ ::before,
+.input-login .password:focus ~ ::before {
+    opacity: 1;
+}
+
+/* Labels flottants */
+.input-login label {
+    position: absolute;
+    left: 1.5rem;
+    top: 1rem;
+    color: var(--text-muted);
+    font-size: 1rem;
+    pointer-events: none;
+    transition: var(--transition);
+    background: var(--dark-bg);
+    padding: 0 0.5rem;
+    z-index: 3;
+}
+
+.input-login .email:focus + label,
+.input-login .password:focus + label,
+.input-login .email:valid + label,
+.input-login .password:valid + label {
+    top: -0.5rem;
+    font-size: 0.85rem;
+    color: var(--border-focus);
+}
+
+/* Boutons modernes */
+.connect,
+.cancel {
+    background: var(--login-gradient);
+    border: none;
+    border-radius: var(--border-radius-sm);
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 1rem 2.5rem;
+    margin: 1rem 0.75rem;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: var(--shadow-soft);
+    min-width: 140px;
+}
+
+.connect::before,
+.cancel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s;
+}
+
+.connect:hover,
+.cancel:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-strong);
+    filter: brightness(1.1);
+}
+
+.connect:hover::before,
+.cancel:hover::before {
+    left: 100%;
+}
+
+.connect:active,
+.cancel:active {
+    transform: translateY(-1px);
+}
+
+/* Bouton Cancel spécifique */
+.cancel {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid var(--border-color);
+    color: var(--text-secondary);
+}
+
+.cancel:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+}
+
+/* Bouton Connect avec effet spécial */
+.connect {
+    background: var(--success-gradient);
+    position: relative;
+    overflow: hidden;
+}
+
+.connect::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.connect:hover::after {
+    width: 300px;
+    height: 300px;
+}
+
+/* Container des boutons */
+.login-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    gap: 0.5rem;
+}
+
+/* Messages d'erreur/succès */
+.login-message {
+    padding: 1rem;
+    border-radius: var(--border-radius-sm);
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    text-align: center;
+    animation: messageSlide 0.4s ease-out;
+}
+
+.login-message.error {
+    background: rgba(255, 65, 108, 0.1);
+    border: 1px solid rgba(255, 65, 108, 0.3);
+    color: #ff6b9d;
+}
+
+.login-message.success {
+    background: rgba(75, 172, 254, 0.1);
+    border: 1px solid rgba(75, 172, 254, 0.3);
+    color: #4facfe;
+}
+
+.login-message.warning {
+    background: rgba(240, 147, 251, 0.1);
+    border: 1px solid rgba(240, 147, 251, 0.3);
+    color: #f093fb;
+}
+
+@keyframes messageSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Loading spinner */
+.login-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--text-primary);
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 0.5rem;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Options de connexion */
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1.5rem 0;
+    font-size: 0.9rem;
+}
+
+.login-option {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: var(--transition);
+    padding: 0.5rem 0;
+    position: relative;
+}
+
+.login-option::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--login-gradient);
+    transition: width 0.3s;
+}
+
+.login-option:hover {
+    color: var(--text-primary);
+}
+
+.login-option:hover::after {
+    width: 100%;
+}
+
+/* Checkbox "Se souvenir de moi" */
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+.remember-me input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #667eea;
+    cursor: pointer;
+}
+
+.remember-me label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.remember-me:hover label {
+    color: var(--text-primary);
+}
+
+/* Section 2FA spéciale */
+.login-AZauth-A2F {
+    text-align: center;
+}
+
+.A2F-title {
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.A2F-description {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+}
+
+.A2F {
+    font-size: 1.5rem;
+    letter-spacing: 0.5rem;
+    text-align: center;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .login-tabs {
+        min-width: 90%;
+        max-width: 90%;
+        padding: 2rem 1.5rem;
+        margin: 1rem;
+    }
+    
+    .login-buttons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .connect,
+    .cancel {
+        width: 100%;
+        margin: 0.5rem 0;
+    }
+    
+    .login-options {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-tabs {
+        padding: 1.5rem 1rem;
+    }
+    
+    .login-title {
+        font-size: 1.8rem;
+    }
+    
+    .login-text {
+        font-size: 1.2rem;
+    }
 }
